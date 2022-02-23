@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejilla criptografica</title>
+</head>
+<body>
+
+    <script>
+        
+        const gridPosBase = [[0,0], [3,0],  [1,1],  [5,1],  [4,2],  [0,3],  [3,3],  [2,4],  [5,4]];
+        const encriptedMessage = 'g_sem_inepdinetsaalds_aeojhn_aece_rl';
+        const matrix = [];
+        var rotated90 = [];
+        var rotated180 = [];
+        var rotated270 = [];
+        let pos = 0;
+        var solucion = "";
+        
+        
+        let i = 0;
+        for (i ; i < 6; i++) {
+            matrix[i] = [];
+            console.log(matrix[i]);
+            for (let j = 0; j < 6; j++) {
+                matrix[i][j] = encriptedMessage[pos];
+                pos++;   
+            }
+        }
+        console.log(matrix);
+        
+        function searchWord(grid){
+            grid.forEach(function(element){
+           let i = element[1];
+           let j = element[0];
+          solucion += matrix[i][j];
+        console.log(solucion);
+       });
+        }
+        
+       function rotar(element){
+            let i = 5 - element[1];
+            let j = element[0];
+            return [i, j];
+        }
+
+        function rotarTodo(listElements){
+            let rotatedElements = listElements.map(function(element){
+                let rotateElement = rotar(element);
+                return rotateElement;
+            });
+            return rotatedElements;
+        }
+
+        function order(array){
+            array.sort(function(a, b){
+            if (a[1] < b[1]) {
+                return -1;
+                } 
+            if (a[1] > b[1]) {
+                return 1;
+                }
+            if (a[0] < b[0]) {
+                return -1;
+                }  
+            if (a[0] > b[0]) {
+                return 1;
+                }  
+                return 0;
+            });
+        }
+                   
+    searchWord(gridPosBase);
+    rotated90 = rotarTodo(gridPosBase);
+    order(rotated90);
+    searchWord(rotated90);
+    rotated180 = rotarTodo(rotarTodo(gridPosBase));
+    order(rotated180);
+    searchWord(rotated180);
+    rotated270 = rotarTodo(rotarTodo(rotarTodo(gridPosBase)));
+    order(rotated270);
+    searchWord(rotated270);
+
+console.log(solucion);
+
+        
+        
+    </script>
+</body>
+</html>
